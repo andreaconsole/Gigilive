@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GiGiLive</title>
+    <meta name="viewport" content="width=device-width, height=device-height,-scale=1">
+  </head>
+
+  <body style="background-color:#d05050"> 
+    <p style="position: absolute; top:10px; left:50px; color: black; font-size:24px; font-weight:800; text-shadow: -2px 0 lightgrey, 0 2px lightgrey, 2px 0 lightgrey, 0 -2px lightgrey;">GiGiLive</p>
+  <!--  <div style="display: block; margin:auto; height: 100%;">
+    <img src="../static/images/frame.png" alt="Loading..." name="frame"  id="frame" style="width: 100%; 
+                height: 100%; 
+                object-fit: contain"/>
+    </div> -->
+    <div id="frame" style="width: 100%;
+  height: 100vh;
+  background-image: url('../static/images/frame.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+   background-attachment: fixed;
+  background-position: center">
+  </div>
+    <script type=text/javascript>
+        function refreshimg(){
+              var d = new Date();
+              var t = d.getTime();
+              document.getElementById('frame').style.backgroundImage = "url('../static/images/frame.png?"+t+"')";
+        }
+        var reloadcam = setInterval("refreshimg()", 4900);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GiGiLive</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../static/css/index.css">
+    <script src="../static/js/jquery.min.js"></script>
+  </head>
+
+  <body>   
+    <div class="row">
+        <div class="column left" >
+            <div id="form">
+                <h2>GiGiLive</h2>
+                 <div id="selectmode">
+                      <h3>Operative mode</h3>
+                      <label class="container">Searching
+                        <input type="radio"  name="radio" checked="checked" value="1">
+                        <span class="checkmark"></span>
+                      </label>
+                      <label class="container">Calibrate
+                        <input type="radio" name="radio" value="2">
+                        <span class="checkmark"></span>
+                      </label>
+                      <label class="container">LiveStack
+                        <input type="radio" name="radio" value ="3">
+                        <span class="checkmark"></span>
+                      </label>
+                </div>
+                <div id="exposuretime">
+                      <h3>Exposure time</h3>
+                      <select id="exptime"  class="select-css">
+                        <option>1</option>
+                        <option selected>2</option>
+                        <option>4</option>
+                        <option>8</option>
+                        <option>16</option>
+                        <option>32</option>
+                        <option>64</option>
+                      </select>
+                </div>
+                <div id="progressbar1">
+                      <progress max="100" value="100" id="pbar"></progress>
+                </div>
+                <div id="savepicture">
+                  <a id="savelink"  href="../static/images/frame.png" download>Save Picture</a>
+                </div>
+            </div>
+        </div>
+        <div class="column right" style="background-color:#bbb;">
+            <img src="../static/images/frame.png" alt="Loading..." name="frame"  id="frame" />
+        </div>
+    </div>
+    <script type=text/javascript>
+          $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+          document.getElementById('exptime').value={{exptime}};
+          
+            $(function() {
+            $('select#exptime').bind('change', function() {
+            console.log($('select[id="exptime"]').val());
+              $.getJSON($SCRIPT_ROOT + '/update_values', {
+                a: $('input[name="radio"]:checked').val(),
+                b: $('select[id="exptime"]').val()
+              });
+              return false;
+            });
+            $('input[name="radio"]').bind('change', function() {
+            console.log($('input[name="radio"]:checked').val());
+              $.getJSON($SCRIPT_ROOT + '/update_values', {
+                a: $('input[name="radio"]:checked').val(),
+                b: $('select[id="exptime"]').val()
+              });
+              return false;
+            });
+        });
+
+        function refreshimg(){
+          a = document.getElementById('pbar').value;
+          if (a<90) {
+              document.getElementById('pbar').value = a+100/document.getElementById('exptime').value
+          } else {     
+              var d = new Date();
+              var t = d.getTime();
+              document.getElementById('frame').src = "{{staticfilepath}}"+"frame.png?"+t;
+              document.getElementById('savelink').download = "frame_"+d.getFullYear()+("0" + (d.getMonth()+1)).slice(-2)+ ("0" + d.getDate()).slice(-2)+
+                               "_"+("0" + d.getHours()).slice(-2)+("0" +d.getMinutes()).slice(-2)+ ("0" + d.getSeconds()).slice(-2);
+              document.getElementById('pbar').value = 0;
+          }
+        }
+        console.log($('select[id="exptime"]').val());
+        var reloadcam = setInterval("refreshimg()", 900);
+  </script>
+  </body>
+</html>
