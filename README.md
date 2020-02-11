@@ -1,5 +1,5 @@
 # GiGiLive
-Softare for live stacking of astronomy deep sky pictures. It works with INDI and EKOS 
+Software for live stacking of astronomy deep sky pictures. It works with INDI and EKOS 
 -------------------------------------------------------------------------------------------------------
 
 How to use:
