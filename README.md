@@ -15,3 +15,9 @@ Features:
 Aligns and stacks in real time 
 accessible via browser
 separate webpages for admin (controls available) and audience (just see)
+
+Libraries:
+-----------
+* astropy.io
+* PyIndi
+* flask
